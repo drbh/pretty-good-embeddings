@@ -1,0 +1,9 @@
+[package]
+name = "pretty-good-embeddings"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ndarray = "0.15.1"
+onnxruntime = "0.0.14"
+tokenizers = "0.13.3"

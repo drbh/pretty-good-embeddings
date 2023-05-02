@@ -44,10 +44,13 @@ impl Client {
         ClientSession { session, tokenizer }
     }
 
-    pub fn init_with_bytes<B: AsRef<[u8]>>(
+    // We need B1 and B2 as both arrays may have different sizes. We cannot
+    // use a single type parameter for both as it would require both arrays
+    // to have the same size.
+    pub fn init_with_bytes<B1: AsRef<[u8]>, B2: AsRef<[u8]>>(
         &self,
-        model_bytes: B,
-        tokenizer_bytes: B,
+        model_bytes: B1,
+        tokenizer_bytes: B2,
     ) -> ClientSession {
         // Create a new session with optimizations
         let session = self
@@ -63,6 +66,13 @@ impl Client {
         let tokenizer = Tokenizer::from_bytes(tokenizer_bytes).unwrap();
 
         ClientSession { session, tokenizer }
+    }
+
+    pub fn init_defaults(&self) -> ClientSession {
+        self.init_with_bytes(
+            std::include_bytes!("../onnx/model.onnx"),
+            std::include_bytes!("../onnx/tokenizer.json"),
+        )
     }
 }
 

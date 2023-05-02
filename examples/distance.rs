@@ -87,7 +87,7 @@ fn main() {
         "without question",
     ];
     let client = Client::new();
-    let mut session = client.init("./onnx".to_string());
+    let mut session = client.init_defaults();
 
     // get embeddings for each input
     let embeddings = inputs

@@ -79,8 +79,7 @@ fn main() {
     ];
 
     let client = Client::new();
-    let mut session = client.init("./onnx".to_string());
-
+    let mut session = client.init_defaults();
 
     let labels = inputs_and_labels
         .iter()

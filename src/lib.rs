@@ -24,7 +24,7 @@ impl Client {
         Self { environment }
     }
 
-    pub fn init(&self, model_path: String) -> ClientSession {
+    pub fn init_with_path(&self, model_path: String) -> ClientSession {
         let tokenizer_path = format!("{}/tokenizer.json", model_path);
         let model_path = format!("{}/model.onnx", model_path);
 
@@ -43,7 +43,39 @@ impl Client {
 
         ClientSession { session, tokenizer }
     }
+
+    // We need B1 and B2 as both arrays may have different sizes. We cannot
+    // use a single type parameter for both as it would require both arrays
+    // to have the same size.
+    pub fn init_with_bytes<B1: AsRef<[u8]>, B2: AsRef<[u8]>>(
+        &self,
+        model_bytes: B1,
+        tokenizer_bytes: B2,
+    ) -> ClientSession {
+        // Create a new session with optimizations
+        let session = self
+            .environment
+            .new_session_builder()
+            .unwrap()
+            .with_optimization_level(onnxruntime::GraphOptimizationLevel::Basic)
+            .unwrap()
+            .with_model_from_memory(model_bytes)
+            .unwrap();
+
+        // Load the tokenizer and encode the input
+        let tokenizer = Tokenizer::from_bytes(tokenizer_bytes).unwrap();
+
+        ClientSession { session, tokenizer }
+    }
+
+    pub fn init_defaults(&self) -> ClientSession {
+        self.init_with_bytes(
+            std::include_bytes!("../onnx/model.onnx"),
+            std::include_bytes!("../onnx/tokenizer.json"),
+        )
+    }
 }
+
 // TODO: Create a client so we only initialize the environment once
 // then we can call the client with the input and get the output
 

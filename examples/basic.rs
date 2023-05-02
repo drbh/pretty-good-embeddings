@@ -2,7 +2,7 @@ use pretty_good_embeddings::Client;
 
 fn main() {
     let client = Client::new();
-    let mut session = client.init("./onnx".to_string());
+    let mut session = client.init_defaults();
 
     let input = "Hello, world!";
 

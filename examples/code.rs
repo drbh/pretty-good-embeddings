@@ -20,7 +20,7 @@ fn calculate_cosine_difference(embeddings_one: &[f32], embeddings_two: &[f32]) -
 
 fn main() {
     let client = Client::new();
-    let mut session = client.init("./onnx".to_string());
+    let mut session = client.init_defaults();
 
     // read the src/lib.rs line by line
     let file = std::fs::File::open("./src/lib.rs").unwrap();

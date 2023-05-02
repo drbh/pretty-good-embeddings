@@ -48,3 +48,23 @@ cargo run --example knn_classifier "ice cream"
 #     ),
 # ]
 ```
+
+
+```bash
+cargo run --example code
+# All embeddings are ready! Type a sentence to get the closest chunk of code.
+# how do we initalize the client?
+
+# --- line 21 ---
+# .unwrap();
+
+#         Self { environment }
+#     }
+
+#     pub fn init(&self, model_path: String) -> ClientSession {
+#         let tokenizer_path = format!("{}/tokenizer.json", model_path);
+#         let model_path = format!("{}/model.onnx", model_path);
+
+#         // Create a new session with optimizations
+# --- line 31 ---
+```

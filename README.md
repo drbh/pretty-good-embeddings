@@ -1,4 +1,6 @@
 ```bash
+git clone https://github.com/drbh/pretty-good-embeddings.git
+cd pretty-good-embeddings
 cargo run --example basic
 # Input: Hello, world!
 # Embeddings: [-0.03817713, 0.03291113, -0.0054594614, 0.014369917]
@@ -29,6 +31,33 @@ cargo run --example distance
 # Input 2: begin immediately
 ```
 
+Exploring quantization to reduce the memory footprint of the embeddings and improve runtime performance.
+
+```bash
+cargo run --example bit_distance
+
+# cargo run --example distance
+# Memory size: 30720
+# Memory size: 7680
+# Quantized embedding is 75% smaller
+
+# Distance: 198
+# Input 1: begin immediately
+# Input 2: start right away
+
+# Distance: 207
+# Input 1: quickly approaching
+# Input 2: rapidly nearing
+
+# Distance: 246
+# Input 1: highly skilled
+# Input 2: extremely proficient
+
+# Distance: 268
+# Input 1: gather information
+# Input 2: collect data
+```
+
 We can use knn to find the nearest neighbors in the embedding space and use them to classify the input.
 
 ```bash
@@ -48,7 +77,6 @@ cargo run --example knn_classifier "ice cream"
 #     ),
 # ]
 ```
-
 
 ```bash
 cargo run --example code
